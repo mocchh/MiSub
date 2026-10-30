@@ -778,6 +778,11 @@ function parseHysteria2Url(url) {
             proxy['skip-cert-verify'] = true;
         }
 
+        // Mihomo uses fingerprint for the server certificate pin, not client-fingerprint.
+        if (params.get('pinSHA256')) {
+            proxy.fingerprint = params.get('pinSHA256');
+        }
+
         // [Hysteria2] handshake timeout
         const handshakeTimeout = params.get('handshake-timeout');
         if (handshakeTimeout) {

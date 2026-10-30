@@ -271,6 +271,8 @@ export function convertClashProxyToUrl(proxy) {
         if (type === 'hysteria2' || type === 'hy2' || type === 'hy') {
             const params = [];
             const password = proxy.password || proxy.auth || '';
+            if (proxy.fingerprint)
+                params.push(`pinSHA256=${encodeURIComponent(proxy.fingerprint)}`);
             if (proxy.obfs) params.push(`obfs=${encodeURIComponent(proxy.obfs)}`);
             if (proxy['obfs-password'])
                 params.push(`obfs-password=${encodeURIComponent(proxy['obfs-password'])}`);

@@ -52,8 +52,12 @@ export function convertHysteriaToUrl(proxy) {
             params.set('sni', proxy.sni || proxy.servername);
         }
 
-        if (proxy['client-fingerprint'] || proxy.fingerprint) {
-            params.set('pinSHA256', proxy['client-fingerprint'] || proxy.fingerprint);
+        // Hysteria2 pins the server certificate; a browser TLS fingerprint is unrelated.
+        const certificatePin = isHysteria2
+            ? proxy.fingerprint
+            : proxy['client-fingerprint'] || proxy.fingerprint;
+        if (certificatePin) {
+            params.set('pinSHA256', certificatePin);
         }
 
         // ALPN
