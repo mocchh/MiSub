@@ -148,6 +148,12 @@ function parseVlessUrl(url) {
             uuid,
         };
 
+        // VLESS Encryption is independent of TLS and is required by encrypted servers.
+        const encryption = params.get('encryption');
+        if (encryption && encryption !== 'none') {
+            proxy.encryption = encryption;
+        }
+
         // 网络类型
         const network = params.get('type') || 'tcp';
         if (network !== 'tcp') {
